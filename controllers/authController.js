@@ -83,6 +83,6 @@ exports.update = async (req, res) => {
   user.resetPasswordExpires = undefined;
   const updatedUser = await user.save();
   await req.login(updatedUser);
-  req.flash('Success', 'Your password has been reset');
+  req.flash('Success', 'Your password has been reset and you have been logged in');
   res.redirect('/');
 };
