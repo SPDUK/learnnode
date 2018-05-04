@@ -11,8 +11,8 @@ router.get('/', catchErrors(storeController.getStores));
 
 // stores
 router.get('/stores', catchErrors(storeController.getStores));
-// adding a new store
-router.get('/add', storeController.addStore);
+// adding a new store -- only if logged in
+router.get('/add', authController.isLoggedIn, storeController.addStore);
 router.post('/add',
   storeController.upload,
   catchErrors(storeController.resize),
