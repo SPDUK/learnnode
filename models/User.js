@@ -4,7 +4,7 @@ mongoose.Promise = global.Promise;
 const md5 = require('md5');
 const validator = require('validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
-const passportLocalMongoose = require('password-local-mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 
 const userSchema = new Schema({
@@ -29,6 +29,6 @@ const userSchema = new Schema({
 
 userSchema.plugin(passportLocalMongoose, {usernameField: 'email'});
 // changes mongodb error to a nicer error for the user
-userSchmea.plugin(mongodbErrorHandler); 
+userSchema.plugin(mongodbErrorHandler); 
 
 module.exports = mongoose.model('User', userSchema);
