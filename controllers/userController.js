@@ -24,7 +24,7 @@ exports.validateRegister = (req, res, next) => {
   req.checkBody('password-confirm', 'Confirmed password cannot be blank').notEmpty();
   req.checkBody('password-confirm', 'Passwords need to match').equals(req.body.password);
 
-  const errors = req.validationErrors();
+  const errors = req.validationErrors(); // from express-validator
   if (errors){
     req.flash('error', errors.map(err => err.msg));
     res.render('register', { title: 'Register', body: req.body, flashes: req.flash() });
@@ -35,7 +35,9 @@ exports.validateRegister = (req, res, next) => {
 
 exports.register = async (req, res, next) => {
   const user = new User({ email: req.body.email, name: req.body.name });
+  // register method with mongoose passport local
   const register = promisify(User.register, User);
+  // supplying the username and password to the User.register
   await register(user, req.body.password);
   next(); // pass to authController.login
 };
