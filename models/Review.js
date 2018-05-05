@@ -21,10 +21,10 @@ const reviewSchema = new mongoose.Schema({
     required: 'Your review must have text!'
   },
   rating: {
-    rating: Number,
+    type: Number,
     min: 1,
     max: 5
   }
 });
 
-mongoose.exports = mongoose.model('Review', reviewSchema);
+module.exports = mongoose.model('Review', reviewSchema);
