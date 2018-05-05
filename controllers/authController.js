@@ -16,43 +16,42 @@ exports.logout = (req, res) => {
   req.logout();
   req.flash('success', 'You are now logged out');
   res.redirect('/');
-}
+};
 
 exports.isLoggedIn = (req, res, next) => {
   // check if the user are authenticated
-  if(req.isAuthenticated())  {
+  if (req.isAuthenticated()) {
     next(); // used is logged in
     return;
-  } 
-    req.flash('error', 'You must be logged in to do that');
-    res.redirect('/login');
+  }
+  req.flash('error', 'You must be logged in to do that');
+  res.redirect('/login');
 };
 
 exports.forgot = async (req, res) => {
-  // see if the user with that email exists 
+  // see if the user with that email exists
   const user = await User.findOne({ email: req.body.email });
-  if(!user) {
+  if (!user) {
     // pretend to send a reset even if the email does not exist
     req.flash('error', 'A password reset has been mailed to you.');
     return res.redirect('/login');
   }
   // reset tokens and expiry on their account
   user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
-  user.resetPasswordExpires = Date.now() + 3600000;  // 1 hour from now
+  user.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
   await user.save();
   // send them an email with the token
   const resetURL = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`;
   await mail.send({
     user,
     filename: 'password-reset',
-    subject: 'Password Reset - Now That\'s Delicious', 
+    subject: "Password Reset - Now That's Delicious",
     resetURL
   });
   req.flash('success', `You have been emailed a password reset link.`);
-  // redirect to the login page 
+  // redirect to the login page
   res.redirect('/login');
 };
-
 
 exports.reset = async (req, res) => {
   const user = await User.findOne({
@@ -70,7 +69,7 @@ exports.reset = async (req, res) => {
 exports.confirmedPasswords = (req, res, next) => {
   if (req.body.password === req.body['password-confirm']) {
     next();
-    return; 
+    return;
   }
   req.flash('error', 'Passwords do not match');
   res.redirect('back');

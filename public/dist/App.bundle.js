@@ -1052,7 +1052,7 @@ function typeAhead(search) {
     }
     next.classList.add(activeClass);
   });
-};
+}
 
 exports.default = typeAhead;
 
@@ -2777,7 +2777,7 @@ function loadPlaces(map) {
     map.setCenter(bounds.getCenter());
     map.fitBounds(bounds);
   }).catch(console.error);
-};
+}
 
 function makeMap(mapDiv) {
   if (!mapDiv) return;
@@ -2818,6 +2818,13 @@ function ajaxHeart(e) {
   e.preventDefault();
   _axios2.default.post(this.action).then(function (res) {
     var isHearted = _this.heart.classList.toggle('heart__button--hearted');
+    document.querySelector('.heart-count').textContent = res.data.hearts.length;
+    if (isHearted) {
+      _this.heart.classList.add('heart__button--float');
+      setTimeout(function () {
+        return _this.heart.classList.remove('heart-button--float');
+      }, 2500);
+    }
   }).catch(console.error);
 }
 exports.default = ajaxHeart;

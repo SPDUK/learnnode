@@ -3,13 +3,12 @@ const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 
 exports.loginForm = (req, res) => {
-  res.render('login', { title: 'Login'});
+  res.render('login', { title: 'Login' });
 };
 
 exports.registerForm = (req, res) => {
-  res.render('register', {title: 'Register'});
+  res.render('register', { title: 'Register' });
 };
-
 
 exports.validateRegister = (req, res, next) => {
   req.sanitizeBody('name');
@@ -25,9 +24,13 @@ exports.validateRegister = (req, res, next) => {
   req.checkBody('password-confirm', 'Passwords need to match').equals(req.body.password);
 
   const errors = req.validationErrors(); // from express-validator
-  if (errors){
+  if (errors) {
     req.flash('error', errors.map(err => err.msg));
-    res.render('register', { title: 'Register', body: req.body, flashes: req.flash() });
+    res.render('register', {
+      title: 'Register',
+      body: req.body,
+      flashes: req.flash()
+    });
     return; // stop function from running
   }
   next(); // no errors
@@ -44,7 +47,7 @@ exports.register = async (req, res, next) => {
 
 exports.account = (req, res) => {
   res.render('account', { title: 'Edit Your Account' });
-}
+};
 
 exports.updateAccount = async (req, res) => {
   const updates = {
@@ -54,8 +57,8 @@ exports.updateAccount = async (req, res) => {
   const user = await User.findOneAndUpdate(
     { _id: req.user._id },
     { $set: updates },
-    { new: true, runValidators: true, context: 'query'}
+    { new: true, runValidators: true, context: 'query' }
   );
   req.flash('success', 'Profile was updated');
   res.redirect('back');
-}
+};
