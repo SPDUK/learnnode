@@ -924,7 +924,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 function autocomplete(input, latInput, lngInput) {
-  // if(!input) return; // skip if there is no input on the page
+  if (!input) return; // skip if there is no input on the page
   var dropdown = new google.maps.places.Autocomplete(input);
   dropdown.addListener('place_changed', function () {
     var place = dropdown.getPlace();
@@ -988,9 +988,21 @@ function typeAhead(search) {
   var searchResults = search.querySelector('.search__results');
 
   searchInput.addEventListener('input', function () {
-    console.log(this.value);
+    // if there is no value, stop
+    if (!this.value) {
+      searchResults.style.display = 'none';
+      return;
+    }
+
+    // show the results
+    searchResults.style.display = 'block';
+    axios.get('/api/search?q=' + this.value).then(function (res) {
+      if (res.data.length) {
+        console.log('There is something to show!');
+      }
+    });
   });
-}
+};
 
 exports.default = typeAhead;
 
@@ -1818,9 +1830,9 @@ var _typeAhead2 = _interopRequireDefault(_typeAhead);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _typeAhead2.default)(document.querySelector('.search'));
-
 (0, _autocomplete2.default)(document.getElementById('address'), document.getElementById('lat'), document.getElementById('lng'));
+
+(0, _typeAhead2.default)(document.querySelector('.search'));
 
 /***/ })
 /******/ ]);
