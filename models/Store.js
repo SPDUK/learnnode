@@ -79,7 +79,25 @@ storeSchema.statics.getTagsList = function() {
   ]);
 };
 
-// find reviews where the stores _id property === reviews store
+storeSchema.statics.getTopStores = function() {
+  return this.aggregate([
+    // lookup stores and populate their reviews
+    {
+      $lookup: {
+        from: 'reviews',
+        localField: '_id',
+        foreignField: 'store',
+        as: 'reviews'
+      }
+    }
+    // filter for only items that have 2 or more reviews
+    // add the average reviews field
+    // sort it by our own field, highest first
+    // limit to 10
+  ]);
+};
+
+// find reviews where the stores _id property = reviews store
 storeSchema.virtual('reviews', {
   ref: 'Review', // which model to link
   localField: '_id', // which field on store
