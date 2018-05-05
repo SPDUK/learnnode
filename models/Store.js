@@ -109,7 +109,7 @@ storeSchema.statics.getTopStores = function() {
     // sort it by our own field, highest first
     { $sort: { averageRating: -1 } },
     // limit to 10
-    { $limit: 10 }
+    { $limit: 5 }
   ]);
 };
 
