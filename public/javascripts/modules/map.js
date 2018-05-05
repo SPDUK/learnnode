@@ -14,15 +14,19 @@ function loadPlaces(map, lat = 43.2, lng = -79.8) {
       alert('No places found');
       return;
     }
+    const bounds = new google.maps.LatLngBounds();
 
     const markers = places.map(place => {
       const [placeLng, placeLat] = place.location.coordinates;
       const position = { lat: placeLat, lng: placeLng };
+      bounds.extend(position);
       const marker = new google.maps.Marker({ map, position });
       marker.place = place;
       return marker;
     });
-    console.log(markers);
+    // moves the map to the center of the map
+    map.setCenter(bounds.getCenter());
+    map.fitBounds(bounds);
   });
 };
 
