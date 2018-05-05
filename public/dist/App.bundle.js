@@ -1882,6 +1882,10 @@ var _map = __webpack_require__(38);
 
 var _map2 = _interopRequireDefault(_map);
 
+var _heart = __webpack_require__(39);
+
+var _heart2 = _interopRequireDefault(_heart);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _autocomplete2.default)(document.getElementById('address'), document.getElementById('lat'), document.getElementById('lng'));
@@ -1889,6 +1893,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _typeAhead2.default)(document.querySelector('.search'));
 
 (0, _map2.default)(document.getElementById('map'));
+
+var heartForms = document.querySelectorAll('form.heart');
+heartForms.addEventListener('submit', _heart2.default);
 
 /***/ }),
 /* 31 */,
@@ -2769,7 +2776,7 @@ function loadPlaces(map) {
     // moves the map to the center of the map
     map.setCenter(bounds.getCenter());
     map.fitBounds(bounds);
-  });
+  }).catch(console.error);
 };
 
 function makeMap(mapDiv) {
@@ -2787,6 +2794,33 @@ function makeMap(mapDiv) {
 }
 
 exports.default = makeMap;
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _axios = __webpack_require__(12);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ajaxHeart(e) {
+  var _this = this;
+
+  e.preventDefault();
+  _axios2.default.post(this.action).then(function (res) {
+    var isHearted = _this.heart.classList.toggle('heart__button--hearted');
+  }).catch(console.error);
+}
+exports.default = ajaxHeart;
 
 /***/ })
 /******/ ]);
