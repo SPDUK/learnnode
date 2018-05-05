@@ -2779,6 +2779,10 @@ function makeMap(mapDiv) {
   loadPlaces(map);
   var input = document.querySelector('[name="geolocate"]');
   var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.addListener('place_changed', function () {
+    var place = autocomplete.getPlace();
+    loadPlaces(map, place.geometry.location.lat(), place.geometry.location.lng());
+  });
   // console.log(input);
 }
 
