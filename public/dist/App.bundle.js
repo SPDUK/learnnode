@@ -2720,6 +2720,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _axios = __webpack_require__(12);
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -2727,19 +2729,40 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapOptions = {
-  center: { lat: 43.2, lng: -79.8 },
-  zoom: 9
+  center: { lat: 43.255203, lng: -79.843826 },
+  zoom: 13
 };
 
 function loadPlaces(map) {
   var lat = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 43.2;
   var lng = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -79.8;
-}
+
+  _axios2.default.get('/api/stores/near?lat=' + lat + '&lng=' + lng).then(function (res) {
+    var places = res.data;
+    if (!places.length) {
+      alert('No places found');
+      return;
+    }
+
+    var markers = places.map(function (place) {
+      var _place$location$coord = _slicedToArray(place.location.coordinates, 2),
+          placeLng = _place$location$coord[0],
+          placeLat = _place$location$coord[1];
+
+      var position = { lat: placeLat, lng: placeLng };
+      var marker = new google.maps.Marker({ map: map, position: position });
+      marker.place = place;
+      return marker;
+    });
+    console.log(markers);
+  });
+};
 
 function makeMap(mapDiv) {
   if (!mapDiv) return;
   // make our map
   var map = new google.maps.Map(mapDiv, mapOptions);
+  loadPlaces(map);
   var input = document.querySelector('[name="geolocate"]');
   var autocomplete = new google.maps.places.Autocomplete(input);
   // console.log(input);
