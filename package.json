@@ -12,7 +12,7 @@
     "assets": "webpack -w --display-max-modules 0",
     "sample": "node ./data/load-sample-data.js",
     "blowitallaway": "node ./data/load-sample-data.js --delete",
-    "heroku-postbuild": "npm install && npm run dev"
+    "heroku-postbuild": "npm start"
   },
   "browserslist": "last 3 versions",
   "dependencies": {
