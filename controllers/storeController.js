@@ -63,7 +63,11 @@ exports.getStores = async (req, res) => {
 
   const [stores, count] = await Promise.all([storesPromise, countPromise]);
   const pages = Math.ceil(count / limit);
-
+  if (!stores.length && skip) {
+    req.flash('info', `Page ${page} does not exist. You have been redirected to page ${pages}`);
+    res.redirect(`/stores/page/${pages}`);
+    return;
+  }
   res.render('stores', { title: 'Stores', stores, page, pages, count });
 };
 
