@@ -23,3 +23,18 @@ That will populate 16 stores with 3 authors and 41 reviews. The logins for the a
 | Wes Bos       | wes@example.com    | wes      |
 | Debbie Downer | debbie@example.com | debbie   |
 | Beau          | beau@example.com   | beau     |
+
+Using mailtrap instead of sendgrid so account recovery is not possible (but for learning purposes it is set up)
+
+# variables.env needs
+
+NODE_ENV=development
+DATABASE= mongoDB
+MAIL_USER=user
+MAIL_PASS=pass
+MAIL_HOST=mailtrap.io
+MAIL_PORT=port
+PORT=7777
+MAP_KEY=google maps key
+SECRET=any string here
+KEY=key
