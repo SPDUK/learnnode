@@ -1,7 +1,8 @@
 
 # keys 
 variables.env
-
+variables.env.now
+*.log
 # dependencies
 /node_modules
 
