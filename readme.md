@@ -28,13 +28,24 @@ Using mailtrap instead of sendgrid so account recovery is not possible (but for 
 
 # variables.env needs
 
+```
 NODE_ENV=development
+
 DATABASE= mongoDB
+
 MAIL_USER=user
+
 MAIL_PASS=pass
+
 MAIL_HOST=mailtrap.io
+
 MAIL_PORT=port
+
 PORT=7777
+
 MAP_KEY=google maps key
+
 SECRET=any string here
+
 KEY=key
+```
