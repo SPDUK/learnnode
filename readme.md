@@ -1,4 +1,4 @@
-## Live at
+## Live at Heroku (might take 10 seconds to load)
 
 https://vast-refuge-71894.herokuapp.com/
 
