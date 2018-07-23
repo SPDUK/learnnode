@@ -33,15 +33,15 @@ Using mailtrap instead of sendgrid so account recovery is not possible (but for 
 ```
 NODE_ENV=development
 
-DATABASE= mongoDB
+DATABASE=mongoDB URL goes here
 
-MAIL_USER=user
+MAIL_USER=username for mailtrap
 
-MAIL_PASS=pass
+MAIL_PASS=password for mailtrap
 
 MAIL_HOST=mailtrap.io
 
-MAIL_PORT=port
+MAIL_PORT=port given by mailtrap
 
 PORT=7777
 
